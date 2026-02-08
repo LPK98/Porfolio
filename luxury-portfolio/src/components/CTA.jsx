@@ -25,7 +25,7 @@ export default function CTA() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             {/* Email Button */}
             <a
-              href="lalpushpakumara575@gmail.com"
+              href="mailto:lalpushpakumara575@gmail.com"
               className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-semibold rounded-2xl bg-primary text-white shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:bg-primary-light hover:-translate-y-1 transition-all duration-300"
             >
               <span className="material-symbols-outlined text-xl">mail</span>
@@ -37,7 +37,9 @@ export default function CTA() {
 
             {/* Schedule Call */}
             <a
-              href="#"
+              href="https://wa.me/94761664575?text=Hi%20Lal%2C%20I%27d%20like%20to%20schedule%20a%20call%20with%20you."
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-semibold rounded-2xl glass-button text-text-primary hover:-translate-y-1 transition-all duration-300"
             >
               <span className="material-symbols-outlined text-xl">

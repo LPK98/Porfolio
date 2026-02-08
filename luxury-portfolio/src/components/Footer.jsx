@@ -1,4 +1,5 @@
 import { footerLinks } from "../data/footer";
+import logo from "../Assets/log.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,9 +13,7 @@ export default function Footer() {
           <div>
             <a href="#home" className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/25">
-                <span className="material-symbols-outlined text-white text-xl">
-                  camera
-                </span>
+                <img src={logo} alt="Logo" className="w-6 h-6 object-contain" />
               </div>
               <span className="text-xl font-bold text-text-primary tracking-tight">
                 Port<span className="text-primary">folio</span>

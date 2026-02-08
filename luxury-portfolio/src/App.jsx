@@ -5,6 +5,7 @@ import Projects from "./components/Projects";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 import ExternalLinks from "./components/ExternalLinks";
+import ProfilePicture from "./components/ProfilePicture";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <ProfilePicture />
         <Expertise />
         <Projects />
         <CTA />

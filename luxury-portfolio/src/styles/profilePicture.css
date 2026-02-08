@@ -1,0 +1,124 @@
+/* ============================================
+   ProfilePicture — Scoped styles
+   Crystal / glassmorphism circular avatar
+   ============================================ */
+
+/* Section wrapper — seamless with #0a0a0f background */
+.profile-picture__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 3.5rem;
+  background: #0a0a0f;
+  position: relative;
+}
+
+/* Entrance animation — reuses existing fadeInUp keyframe from index.css */
+.profile-picture__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  position: relative;
+}
+
+/* Glass frame around the avatar */
+.profile-picture__frame {
+  width: 270px;
+  height: 250px;
+  border-radius: 50%;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+  cursor: pointer;
+}
+
+/* Hover — subtle scale + blue glow matching existing glass-card pattern */
+.profile-picture__frame:hover {
+  transform: scale(1.04);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow:
+    0 8px 32px rgba(37, 99, 235, 0.15),
+    0 0 0 1px rgba(37, 99, 235, 0.1),
+    0 0 60px rgba(37, 99, 235, 0.06);
+}
+
+/* The actual image — circular, fills the frame */
+.profile-picture__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Optional tooltip — appears on hover below the frame */
+.profile-picture__tooltip {
+  position: absolute;
+  bottom: -44px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* Show tooltip on frame hover */
+.profile-picture__frame:hover ~ .profile-picture__tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---- Responsive ---- */
+
+/* Tablets and smaller desktops */
+@media (max-width: 768px) {
+  .profile-picture__section {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .profile-picture__frame {
+    width: 185px;
+    height: 185px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .profile-picture__section {
+    padding: 1rem 1rem 2rem;
+  }
+
+  .profile-picture__frame {
+    width: 160px;
+    height: 160px;
+  }
+
+  .profile-picture__tooltip {
+    font-size: 0.75rem;
+    bottom: -40px;
+  }
+}
