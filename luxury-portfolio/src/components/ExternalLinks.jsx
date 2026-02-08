@@ -91,7 +91,7 @@ const links = [
   {
     label: "LinkedIn",
     description: "Professional network & experience",
-    href: "www.linkedin.com/in/lal-pushpakumaran-23264b357",
+    href: "https://www.linkedin.com/in/lal-pushpakumaran",
     icon: LinkedInIcon,
     ariaLabel: "Visit my LinkedIn profile (opens in new tab)",
   },
