@@ -1,16 +1,18 @@
 /* ============================================
    ProfilePicture — Scoped styles
-   Crystal / glassmorphism circular avatar
+   Circular portrait as a planet with an orbiting moon
    ============================================ */
 
-/* Section wrapper — seamless with #0a0a0f background */
+/* Section wrapper — transparent so the page starfield shows through.
+   No bottom padding: the Expertise section's own top padding already
+   spaces the next heading, so the portrait sits centred between the
+   hero stats and that heading. */
 .profile-picture__section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1rem 3.5rem;
-  background: #0a0a0f;
+  padding: 4rem 1rem 0;
   position: relative;
 }
 
@@ -19,77 +21,107 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 3.5rem;
+  margin: 0;
   animation: fadeInUp 0.8s ease forwards;
   opacity: 0;
+}
+
+/* Square box the planet and its orbit are centred on */
+.profile-picture__stage {
   position: relative;
+  width: clamp(220px, 28vw, 340px);
+  aspect-ratio: 1;
 }
 
-/* Glass frame around the avatar */
-.profile-picture__frame {
-  width: 270px;
-  height: 250px;
-  border-radius: 50%;
-  padding: 5px;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.04);
-  transition:
-    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.4s ease,
-    border-color 0.4s ease;
-  cursor: pointer;
-}
-
-/* Hover — subtle scale + blue glow matching existing glass-card pattern */
-.profile-picture__frame:hover {
-  transform: scale(1.04);
-  border-color: rgba(37, 99, 235, 0.3);
-  box-shadow:
-    0 8px 32px rgba(37, 99, 235, 0.15),
-    0 0 0 1px rgba(37, 99, 235, 0.1),
-    0 0 60px rgba(37, 99, 235, 0.06);
-}
-
-/* The actual image — circular, fills the frame */
-.profile-picture__image {
+/* The portrait itself, with a blue atmosphere glow */
+.profile-picture__planet {
+  position: relative;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  object-fit: cover;
-  display: block;
+  box-shadow:
+    0 0 0 1px rgba(147, 197, 253, 0.14),
+    0 0 40px rgba(37, 99, 235, 0.3),
+    0 0 120px rgba(37, 99, 235, 0.14);
 }
 
-/* Optional tooltip — appears on hover below the frame */
-.profile-picture__tooltip {
+/* Rim light — brighter on the top-left, matching the photo's key light */
+.profile-picture__planet::after {
+  content: "";
   position: absolute;
-  bottom: -44px;
-  left: 50%;
-  transform: translateX(-50%) translateY(6px);
-  padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  opacity: 0;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgba(191, 219, 254, 0.1),
+    inset 10px 12px 28px -12px rgba(147, 197, 253, 0.35);
   pointer-events: none;
 }
 
-/* Show tooltip on frame hover */
-.profile-picture__frame:hover ~ .profile-picture__tooltip {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+.profile-picture__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Orbit ring and moon track share size and spin, so they stay in step */
+.profile-picture__orbit,
+.profile-picture__moon-track {
+  position: absolute;
+  inset: -11%;
+  border-radius: 50%;
+  animation: profileOrbit 40s linear infinite;
+  pointer-events: none;
+}
+
+/* Ring — a conic gradient masked to a thin line; brightest just behind
+   the moon (at the top) so it leaves a fading trail as it turns clockwise */
+.profile-picture__orbit {
+  background: conic-gradient(
+    rgba(147, 197, 253, 0.05) 0deg,
+    rgba(147, 197, 253, 0.08) 200deg,
+    rgba(147, 197, 253, 0.55) 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+}
+
+/* Moon — on its own layer because the ring's mask would clip it */
+.profile-picture__moon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #dbeafe;
+  box-shadow: 0 0 10px 2px rgba(96, 165, 250, 0.6);
+  transform: translate(-50%, -50%);
+}
+
+.profile-picture__caption {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+@keyframes profileOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-picture__wrapper {
+    animation: none;
+    opacity: 1;
+  }
+
+  .profile-picture__orbit,
+  .profile-picture__moon-track {
+    animation: none;
+  }
 }
 
 /* ---- Responsive ---- */
@@ -97,28 +129,25 @@
 /* Tablets and smaller desktops */
 @media (max-width: 768px) {
   .profile-picture__section {
-    padding: 3rem 1rem 2.5rem;
+    padding: 3rem 1rem 1rem;
   }
 
-  .profile-picture__frame {
-    width: 185px;
-    height: 185px;
+  .profile-picture__wrapper {
+    gap: 2.75rem;
   }
 }
 
 /* Mobile */
+/* On phones the hero ends right at the stats, so this section carries the
+   space above the portrait, and the negative margin trims the Expertise
+   top padding to match the space above. */
 @media (max-width: 480px) {
   .profile-picture__section {
-    padding: 2.5rem 1rem 2rem;
+    padding: 6.5rem 1rem 0;
+    margin-bottom: -2rem;
   }
 
-  .profile-picture__frame {
-    width: 160px;
-    height: 160px;
-  }
-
-  .profile-picture__tooltip {
-    font-size: 0.75rem;
-    bottom: -40px;
+  .profile-picture__caption {
+    font-size: 0.9rem;
   }
 }

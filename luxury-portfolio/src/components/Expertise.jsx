@@ -1,4 +1,4 @@
-import { expertiseItems } from "../data/expertise";
+import { expertiseItems, creativeSkills } from "../data/expertise";
 
 export default function Expertise() {
   return (
@@ -55,6 +55,49 @@ export default function Expertise() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Beyond Code — secondary creative skills, in a quieter, compact card style */}
+        <div className="mt-24">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+              Beyond Code
+            </h3>
+            <p className="max-w-xl mx-auto text-text-secondary leading-relaxed">
+              Creative skills from my design and photography background.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {creativeSkills.map((skill) => (
+              <div
+                key={skill.title}
+                className="glass-card group p-6 rounded-2xl hover:-translate-y-1 transition-all duration-500"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-xl text-primary">
+                      {skill.icon}
+                    </span>
+                  </div>
+                  <h4 className="text-base font-semibold text-text-primary">
+                    {skill.title}
+                  </h4>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {skill.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 text-xs font-medium rounded-lg bg-white/5 text-text-muted border border-white/5"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

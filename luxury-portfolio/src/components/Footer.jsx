@@ -20,8 +20,8 @@ export default function Footer() {
               </span>
             </a>
             <p className="text-text-secondary text-sm leading-relaxed max-w-xs">
-              Building premium digital experiences with modern technologies and
-              refined design sensibilities.
+              Building full-stack web, mobile, and cloud applications with
+              clean architecture and an eye for design.
             </p>
           </div>
 

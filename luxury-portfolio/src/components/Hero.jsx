@@ -6,8 +6,8 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
-      {/* Ambient Background Orbs */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Ambient Background Orbs (faded out at the bottom so the starfield stays visible) */}
+      <div className="absolute inset-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black_calc(100%_-_8rem),transparent)]">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-700/10 rounded-full blur-[100px] animate-float-delay" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-800/5 rounded-full blur-[140px]" />
@@ -33,7 +33,7 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="max-w-2xl mx-auto text-lg sm:text-xl text-text-secondary leading-relaxed mb-10 animate-fade-in-up-delay-2">
-          UI/UX designer and frontend developer crafting intuitive digital experiences, supported by strong visual design and photography that elevate brand storytelling.
+          Software Engineer and Full-Stack Developer building web, mobile, and cloud applications, from React interfaces and secure REST APIs to Azure deployments and AI-powered features.
         </p>
 
         {/* CTAs */}
@@ -75,9 +75,6 @@ export default function Hero() {
           ))}
         </div>
       </div>
-
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0a0a0f] to-transparent" />
     </section>
   );
 }

@@ -1,6 +1,16 @@
+import { useState } from "react";
 import { projects } from "../data/projects";
+import ProjectGallery from "./ProjectGallery";
+
+// Wording for a gallery trigger: a demo video, or a set of screens
+const galleryAction = (gallery) =>
+  gallery.every((item) => item.type === "video")
+    ? { icon: "play_circle", label: "Watch demo" }
+    : { icon: "photo_library", label: "View screens" };
 
 export default function Projects() {
+  const [galleryProject, setGalleryProject] = useState(null);
+
   return (
     <section id="projects" className="relative py-32 overflow-hidden">
       {/* Ambient Glow */}
@@ -30,16 +40,50 @@ export default function Projects() {
             >
               {/* Image */}
               <div className="relative h-56 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  loading="lazy"
-                />
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                ) : (
+                  /* No screenshot yet: show the project's icon instead */
+                  <div className="w-full h-full flex items-center justify-center bg-primary/5 group-hover:scale-110 transition-transform duration-700">
+                    <span className="material-symbols-outlined text-7xl text-primary/70">
+                      {project.icon}
+                    </span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
                 <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold rounded-lg glass-badge text-primary">
                   {project.category}
                 </span>
+
+                {/* Gallery trigger */}
+                {project.gallery && (
+                  <button
+                    type="button"
+                    onClick={() => setGalleryProject(project)}
+                    aria-label={`${project.category}: ${galleryAction(project.gallery).label}`}
+                    className="group/gallery absolute inset-0 flex items-center justify-center cursor-zoom-in focus:outline-none"
+                  >
+                    {project.gallery.length > 1 && (
+                      <span className="absolute top-4 right-4 flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-lg glass-badge text-text-primary">
+                        <span className="material-symbols-outlined text-sm">
+                          photo_library
+                        </span>
+                        {project.gallery.length}
+                      </span>
+                    )}
+                    <span className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-full bg-[#0a0a0f]/70 backdrop-blur-md border border-white/10 text-text-primary opacity-0 group-hover:opacity-100 group-focus-visible/gallery:opacity-100 transition-opacity duration-500">
+                      <span className="material-symbols-outlined text-lg">
+                        {galleryAction(project.gallery).icon}
+                      </span>
+                      {galleryAction(project.gallery).label}
+                    </span>
+                  </button>
+                )}
               </div>
 
               {/* Content */}
@@ -63,21 +107,46 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {/* Link */}
-                <a
-                  href={project.link}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-light transition-colors duration-300 group/link"
-                >
-                  View Project
-                  <span className="material-symbols-outlined text-base group-hover/link:translate-x-1 transition-transform duration-300">
-                    arrow_forward
-                  </span>
-                </a>
+                {/* Links */}
+                {(project.gallery || project.link) && (
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                    {project.gallery && (
+                      <button
+                        type="button"
+                        onClick={() => setGalleryProject(project)}
+                        className="inline-flex items-center gap-2 text-sm font-semibold capitalize text-primary hover:text-primary-light transition-colors duration-300 group/link"
+                      >
+                        {galleryAction(project.gallery).label}
+                        <span className="material-symbols-outlined text-base group-hover/link:translate-x-1 transition-transform duration-300">
+                          arrow_forward
+                        </span>
+                      </button>
+                    )}
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-light transition-colors duration-300 group/link"
+                      >
+                        View Project
+                        <span className="material-symbols-outlined text-base group-hover/link:translate-x-1 transition-transform duration-300">
+                          arrow_forward
+                        </span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {galleryProject && (
+        <ProjectGallery
+          project={galleryProject}
+          onClose={() => setGalleryProject(null)}
+        />
+      )}
     </section>
   );
 }

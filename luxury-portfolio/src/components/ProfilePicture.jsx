@@ -1,28 +1,39 @@
-/* ProfilePicture — Self-contained circular avatar with glass frame
+/* ProfilePicture — Circular portrait shown as a planet in the starfield,
+   with a soft atmosphere glow and a slow orbiting moon.
    Scoped styles in ../styles/profilePicture.css
    No global style modifications */
 
-import profileImg from "../Assets/2a.png";
+import portraitImg from "../Assets/profile-portrait.webp";
 import "../styles/profilePicture.css";
 
 export default function ProfilePicture() {
   return (
-    /* Glass-framed profile picture section */
     <section className="profile-picture__section">
-      <div className="profile-picture__wrapper">
-        {/* Circular glass frame with hover glow */}
-        <div className="profile-picture__frame">
-          <img
-            src={profileImg}
-            alt="Profile Picture"
-            className="profile-picture__image"
-          />
+      <figure className="profile-picture__wrapper">
+        <div className="profile-picture__stage">
+          {/* Orbit ring with a fading trail, and the moon that leads it */}
+          <div className="profile-picture__orbit" aria-hidden="true" />
+          <div className="profile-picture__moon-track" aria-hidden="true">
+            <span className="profile-picture__moon" />
+          </div>
+
+          <div className="profile-picture__planet">
+            <img
+              src={portraitImg}
+              alt="Lal Pushpakumara working on a laptop"
+              width="720"
+              height="720"
+              loading="lazy"
+              decoding="async"
+              className="profile-picture__image"
+            />
+          </div>
         </div>
-        {/* Tooltip revealed on hover */}
-        <span className="profile-picture__tooltip">
+
+        <figcaption className="profile-picture__caption">
           Hi, I'm Lal Pushpakumara
-        </span>
-      </div>
+        </figcaption>
+      </figure>
     </section>
   );
 }
